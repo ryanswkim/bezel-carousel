@@ -1,72 +1,70 @@
 import React, { useState } from 'react';
-/* eslint-disable */
+/* eslint-disable react/prop-types */
+
+const GLASS_HEIGHT = 200;
+const GLASS_WIDTH = 200;
+const ZOOM = 1.5;
 
 function Magnifier({
   src,
-  magnifierHeight = 200,
-  magnifierWidth = 200,
-  zoomLevel = 1.5,
 }) {
   const [[x, y], setXY] = useState([0, 0]);
   const [[imgWidth, imgHeight], setSize] = useState([0, 0]);
   const [showMagnifier, setShowMagnifier] = useState(false);
-  const [delta, setDelta] = useState(0);
   return (
     <div
       style={{
-        height: `100%`,
-        width: `100%`
+        height: '100%',
+        width: '100%',
+        overflow: 'hidden',
       }}
     >
       <img
         src={src}
-        style={{ width: `100%`, height: `100%`, userSelect: `none`, borderRadius: `5%`, border: `1px solid black`, opacity: 0 }}
+        style={{
+          width: '100%', height: '100%', userSelect: 'none', borderRadius: '5%', border: '1px solid black', opacity: 0,
+        }}
         onMouseEnter={(e) => {
-          const elem = e.currentTarget;
-          const { width, height } = elem.getBoundingClientRect();
+          const target = e.currentTarget;
+          const { width, height } = target.getBoundingClientRect();
           setSize([width, height]);
           setShowMagnifier(true);
         }}
         onMouseMove={(e) => {
-          const elem = e.currentTarget;
-          const { top, left } = elem.getBoundingClientRect();
+          const target = e.currentTarget;
+          const { top, left } = target.getBoundingClientRect();
 
-          setDelta(document.documentElement.clientWidth - 1600);
-
-          const x = e.pageX - left - window.pageXOffset;
-          const y = e.pageY - top - window.pageYOffset;
-          setXY([x, y]);
+          const w = e.pageX - left - window.pageXOffset;
+          const h = e.pageY - top - window.pageYOffset;
+          setXY([w, h]);
         }}
-        onMouseLeave={() => {
-          setShowMagnifier(false);
-        }}
-        alt={'watch display'}
+        onMouseLeave={() => { setShowMagnifier(false); }}
+        alt="Watch display"
       />
 
       <div
         style={{
           display: showMagnifier ? '' : 'none',
-          position: 'absolute',
 
-          pointerEvents: 'none',
-          height: `${magnifierHeight}px`,
-          width: `${magnifierWidth}px`,
-          borderRadius: 100,
-          top: `${y - magnifierHeight / 2}px`,
-          left: `${x - magnifierWidth / 2}px`,
+          position: 'absolute',
+          top: `${y - GLASS_HEIGHT / 2}px`,
+          left: `${x - GLASS_WIDTH / 2}px`,
+          height: `${GLASS_HEIGHT}px`,
+          width: `${GLASS_WIDTH}px`,
+          borderRadius: '100%',
           border: '2px solid #013220',
-          backgroundColor: 'white',
+
           backgroundImage: `url('${src}')`,
           backgroundRepeat: 'no-repeat',
-
-          backgroundSize: `${imgWidth * zoomLevel}px ${
-            imgHeight * zoomLevel
+          backgroundSize: `${imgWidth * ZOOM}px ${
+            imgHeight * ZOOM
           }px`,
+          backgroundPositionX: `${-x * ZOOM + GLASS_WIDTH / 2}px`,
+          backgroundPositionY: `${-y * ZOOM + GLASS_HEIGHT / 2}px`,
 
-          backgroundPositionX: `${-x * zoomLevel + magnifierWidth / 2}px`,
-          backgroundPositionY: `${-y * zoomLevel + magnifierHeight / 2}px`
+          pointerEvents: 'none',
         }}
-      ></div>
+      />
     </div>
   );
 }

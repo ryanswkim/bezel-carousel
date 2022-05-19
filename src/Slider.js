@@ -11,19 +11,20 @@ function Slider() {
     setIndex(index);
   }
 
-  function importAll(r) {
+  function importImages(r) {
     const images = {};
     r.keys().forEach((item) => { images[item.replace('./', '')] = r(item); });
     return images;
   }
 
-  const images = importAll(require.context('./pictures', false, /\.(jpg)$/));
+  const images = importImages(require.context('./pictures', false, /\.(jpg)$/));
+  const maxShift = -100 * (Object.values(images).length - 1);
 
   return (
-  /* eslint-disable react/no-array-index-key */
+  // /* eslint-disable react/no-array-index-key */
     <div className="container">
-      {Object.values(images).map((item, index) => (
-        <div key={index} className="slide" style={{ transform: `translateX(${x}%)` }}>
+      {Object.values(images).map((item) => (
+        <div key={item} className="slide" style={{ transform: `translateX(${x}%)` }}>
           <div className="image-container">
             <img className="carousel-img" src={item} alt="watch display" />
             <Magnifier src={item} />
@@ -47,7 +48,7 @@ function Slider() {
         {Object.values(images).map((item, index) => (
           <input
             className={(imageIndex === index) ? 'selected-btn' : 'unselected-btn'}
-            key={index}
+            key={item}
             type="image"
             onClick={() => { shift(index); }}
             src={item}
@@ -57,11 +58,11 @@ function Slider() {
         <input
           className="shift-btn"
           value=">"
-          disabled={x === -700}
+          disabled={x === maxShift}
           key="right"
           type="button"
           onClick={() => {
-            setX(Math.max(x - 100, -700));
+            setX(Math.max(x - 100, maxShift));
             setIndex(imageIndex + 1);
           }}
         />
