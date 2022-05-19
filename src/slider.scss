@@ -18,7 +18,7 @@ html, body {
 }
 
 .filler {
-    width: 30%;
+    width: 27.5%;
     height: 200%;
     position: absolute;
 
@@ -27,15 +27,13 @@ html, body {
 
 .slide {
     position: relative;
-    min-width: 100%;
+    min-width: 50%;
     height: 80%;
     margin-bottom: 5%;
     
     display: flex;
     align-items: center;
     justify-content: center;
-    
-    // transition: 0.5s;
 }
 
 .carousel-img{
@@ -47,8 +45,7 @@ html, body {
 
 .image-container {
     position: relative;
-    width: 39%;
-    margin-right: 0.15%;
+    width: 88%;
     border-radius: 5%;
     overflow: hidden;
 
@@ -62,7 +59,7 @@ html, body {
     height: 7.5%;
     position: absolute;
 
-    bottom: 9%;
+    bottom: 3%;
     left: 22.5%;
 
     display: flex;
@@ -96,4 +93,8 @@ html, body {
 .btn-image{
     width: 100%;
     height: 100%;
+}
+
+.fluff {
+    width: 25%;
 }

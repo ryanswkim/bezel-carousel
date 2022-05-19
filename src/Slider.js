@@ -2,16 +2,18 @@ import React, { useState } from 'react';
 import Magnifier from './Magnifier';
 import './slider.scss';
 
+const SNAP_DIST = 12.5;
+
 function Slider() {
   const [imageIndex, setIndex] = useState(0);
-  const [x, setX] = useState(0);
+  const [x, setX] = useState(25);
   const [anchor, setAnchor] = useState(0);
   const [dragging, setDragging] = useState(false);
   const [mousePos, setMouse] = useState(0);
 
   function shift(index) {
-    setX(-100 * index);
-    setAnchor(-100 * index);
+    setX(-50 * index + 25);
+    setAnchor(-50 * index);
     setIndex(index);
   }
 
@@ -23,20 +25,22 @@ function Slider() {
 
   const images = importImages(require.context('./pictures', false, /\.(jpg)$/));
   const maxIndex = Object.values(images).length - 1;
-  const maxShift = -100 * maxIndex;
 
   return (
   /* eslint-disable jsx-a11y/no-static-element-interactions */
     <div
       className="container"
       onMouseUp={() => {
+        if (!dragging) {
+          return;
+        }
         setDragging(false);
-        const right = -Math.round((x - 35) / 100);
-        const left = -Math.round((x + 35) / 100);
-        if (right === left === imageIndex) {
+        const i = 25 - imageIndex * 50;
+        const d = x - i;
+        if (d >= -SNAP_DIST && d <= SNAP_DIST) {
           shift(imageIndex);
         } else {
-          shift((right !== imageIndex) ? right : left);
+          shift((d < -SNAP_DIST) ? imageIndex + 1 : imageIndex - 1);
         }
       }}
       onMouseMove={(e) => {
@@ -54,8 +58,8 @@ function Slider() {
         <div
           key={item}
           className="slide"
-          style={dragging ? { transition: 'none', transform: `translateX(${x}%)` }
-            : { transition: '0.5s', transform: `translateX(${x}%)` }}
+          style={dragging ? { transition: 'none', transform: `translateX(${x * 2}%)` }
+            : { transition: '0.5s', transform: `translateX(${x * 2}%)` }}
         >
           <div
             className="image-container"
@@ -77,13 +81,14 @@ function Slider() {
         <input
           className="shift-btn"
           value="<"
-          disabled={x === 0}
+          disabled={imageIndex === 0}
           key="left"
           type="button"
           onClick={() => {
-            setX(Math.min(x + 100, 0));
-            setAnchor(x);
-            setIndex(imageIndex - 1);
+            shift(imageIndex - 1);
+            // setX(Math.min(x + 50, 25));
+            // setAnchor(x);
+            // setIndex(imageIndex - 1);
           }}
         />
         {Object.values(images).map((item, index) => (
@@ -99,13 +104,11 @@ function Slider() {
         <input
           className="shift-btn"
           value=">"
-          disabled={x === maxShift}
+          disabled={imageIndex === maxIndex}
           key="right"
           type="button"
           onClick={() => {
-            setX(Math.max(x - 100, maxShift));
-            setAnchor(x);
-            setIndex(imageIndex + 1);
+            shift(imageIndex + 1);
           }}
         />
       </div>
