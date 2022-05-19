@@ -21,6 +21,7 @@ function Magnifier({
     >
       <img
         src={src}
+        draggable={false}
         style={{
           width: '100%', height: '100%', userSelect: 'none', borderRadius: '5%', border: '1px solid black', opacity: 0,
         }}
