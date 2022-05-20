@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-/* eslint-disable */
+/* eslint-disable react/prop-types */
 
 const GLASS_HEIGHT = 200;
 const GLASS_WIDTH = 200;
@@ -25,7 +25,7 @@ function Magnifier({
         style={{
           width: '100%', height: '100%', userSelect: 'none', borderRadius: '5%', border: '1px solid black',
         }}
-        onMouseEnter={(e) => { // sets state variables to current image dimensions and turns on magnifier
+        onMouseEnter={(e) => { // sets state variables to image dimensions and activates magnifier
           const target = e.currentTarget;
           const { width, height } = target.getBoundingClientRect();
           setSize([width, height]);
@@ -44,33 +44,33 @@ function Magnifier({
       />
 
       {(visible) ? (
-      <div
-        style={{
-          display: showMagnifier ? '' : 'none',
+        <div
+          style={{
+            display: showMagnifier ? '' : 'none',
 
-          position: 'absolute',
-          // sets position to mouse and subtract half of height/width to center it
-          top: `${y - GLASS_HEIGHT / 2}px`,
-          left: `${x - GLASS_WIDTH / 2}px`,
-          height: `${GLASS_HEIGHT}px`,
-          width: `${GLASS_WIDTH}px`,
-          borderRadius: '100%',
-          border: '2px solid #013220',
+            position: 'absolute',
+            // sets position to mouse and subtract half of height/width to center it
+            top: `${y - GLASS_HEIGHT / 2}px`,
+            left: `${x - GLASS_WIDTH / 2}px`,
+            height: `${GLASS_HEIGHT}px`,
+            width: `${GLASS_WIDTH}px`,
+            borderRadius: '100%',
+            border: '2px solid #013220',
 
-          // sets background image to zoomed-in version of the src image
-          backgroundImage: `url('${src}')`,
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: `${imgWidth * ZOOM}px ${
-            imgHeight * ZOOM
-          }px`,
-          
-          // sets display to show the correct position of the image that the mouse is currently on
-          backgroundPositionX: `${-x * ZOOM + GLASS_WIDTH / 2}px`,
-          backgroundPositionY: `${-y * ZOOM + GLASS_HEIGHT / 2}px`,
+            // sets background image to zoomed-in version of the src image
+            backgroundImage: `url('${src}')`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: `${imgWidth * ZOOM}px ${
+              imgHeight * ZOOM
+            }px`,
 
-          pointerEvents: 'none',
-        }}
-      />
+            // sets display to show the correct position of the image that the mouse is currently on
+            backgroundPositionX: `${-x * ZOOM + GLASS_WIDTH / 2}px`,
+            backgroundPositionY: `${-y * ZOOM + GLASS_HEIGHT / 2}px`,
+
+            pointerEvents: 'none',
+          }}
+        />
       ) : ''}
     </div>
   );

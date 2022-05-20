@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-/* eslint-disable */
 import Magnifier from './Magnifier';
 import './slider.scss';
 
@@ -15,13 +14,13 @@ function Slider() {
 
   window.addEventListener('resize', () => { setLg(window.innerWidth >= 992); });
 
-  function shift(index){ // shifting the carousel left and right
+  function shift(index) { // shifting the carousel left and right
     setX(-50 * index + 25);
     setAnchor(-50 * index);
     setIndex(index);
   }
 
-  function importImages(r) { // push back all images into one array 
+  function importImages(r) { // push back all images into one array
     const images = {};
     r.keys().forEach((item) => { images[item.replace('./', '')] = r(item); });
     return images;
@@ -31,7 +30,6 @@ function Slider() {
   const maxIndex = Object.values(images).length - 1;
 
   return (
-  /* eslint-disable jsx-a11y/no-static-element-interactions */
     <div
       role="none"
       className="container"
@@ -48,7 +46,7 @@ function Slider() {
           shift((d < -SNAP_DIST) ? imageIndex + 1 : imageIndex - 1);
         }
       }}
-      onMouseMove={(e) => { // shifts carousel according to mouse movement 
+      onMouseMove={(e) => { // shifts carousel according to mouse movement
         if (!dragging) {
           return;
         }
@@ -77,13 +75,13 @@ function Slider() {
               setAnchor(x);
             }}
           >
-            <Magnifier src={item} visible={lg} /> 
+            <Magnifier src={item} visible={lg} />
           </div>
         </div>
       ))}
 
       <div
-        className={lg ? "buttons-lg" : "buttons-small"}
+        className={lg ? 'buttons-lg' : 'buttons-small'}
         id="buttons"
         style={{ bottom: '3%' }}
       >
@@ -91,16 +89,16 @@ function Slider() {
           className="shift-btn"
           value="<"
           disabled={imageIndex === 0}
-          style = {lg ? {display: 'inline-block'} : {display: 'none'}}
+          style={lg ? { display: 'inline-block' } : { display: 'none' }}
           key="left"
           type="button"
           onClick={() => {
             shift(imageIndex - 1);
           }}
         />
-        {Object.values(images).map((item, index) => lg ? ( // image buttons for >= 992px 
+        {Object.values(images).map((item, index) => (lg ? ( // image buttons for >= 992px
           <input
-            style={(imageIndex === index) ? {border: '2.5px solid black'} : {border: '2px solid #EEE'}}
+            style={(imageIndex === index) ? { border: '2.5px solid black' } : { border: '2px solid #EEE' }}
             key={item}
             type="image"
             onClick={() => { shift(index); }}
@@ -108,18 +106,18 @@ function Slider() {
             alt="button"
           />
         ) : (
-          <input // circle buttons for < 992px 
-          style={(imageIndex === index) ? {backgroundColor: 'black'} : {backgroundColor: 'lightgrey'}}
-          key={item}
-          type="button"
-          onClick={() => { shift(index); }}
-        />
-        ))}
+          <input // circle buttons for < 992px
+            style={(imageIndex === index) ? { backgroundColor: 'black' } : { backgroundColor: 'lightgrey' }}
+            key={item}
+            type="button"
+            onClick={() => { shift(index); }}
+          />
+        )))}
         <input
           className="shift-btn"
           value=">"
           disabled={imageIndex === maxIndex}
-          style = {lg ? {display: 'inline-block'} : {display: 'none'}}
+          style={lg ? { display: 'inline-block' } : { display: 'none' }}
           key="right"
           type="button"
           onClick={() => {
