@@ -15,13 +15,13 @@ function Slider() {
 
   window.addEventListener('resize', () => { setLg(window.innerWidth >= 992); });
 
-  function shift(index){
+  function shift(index){ // shifting the carousel left and right
     setX(-50 * index + 25);
     setAnchor(-50 * index);
     setIndex(index);
   }
 
-  function importImages(r) {
+  function importImages(r) { // push back all images into one array 
     const images = {};
     r.keys().forEach((item) => { images[item.replace('./', '')] = r(item); });
     return images;
@@ -35,7 +35,7 @@ function Slider() {
     <div
       role="none"
       className="container"
-      onMouseUp={() => {
+      onMouseUp={() => { // snaps to nearest slide upon mouse release
         if (!dragging) {
           return;
         }
@@ -48,7 +48,7 @@ function Slider() {
           shift((d < -SNAP_DIST) ? imageIndex + 1 : imageIndex - 1);
         }
       }}
-      onMouseMove={(e) => {
+      onMouseMove={(e) => { // shifts carousel according to mouse movement 
         if (!dragging) {
           return;
         }
@@ -61,7 +61,7 @@ function Slider() {
         }
       }}
     >
-      {Object.values(images).map((item) => (
+      {Object.values(images).map((item) => ( // create each slide
         <div
           key={item}
           className="slide"
@@ -71,13 +71,13 @@ function Slider() {
           <div
             role="none"
             className="image-container"
-            onMouseDown={(e) => {
+            onMouseDown={(e) => { // initialize dragging sequence if clicking on image
               setDragging(true);
               setMouse(e.clientX);
               setAnchor(x);
             }}
           >
-            <Magnifier src={item} visible={lg} />
+            <Magnifier src={item} visible={lg} /> 
           </div>
         </div>
       ))}
@@ -98,7 +98,7 @@ function Slider() {
             shift(imageIndex - 1);
           }}
         />
-        {Object.values(images).map((item, index) => lg ? (
+        {Object.values(images).map((item, index) => lg ? ( // image buttons for >= 992px 
           <input
             style={(imageIndex === index) ? {border: '2.5px solid black'} : {border: '2px solid #EEE'}}
             key={item}
@@ -108,7 +108,7 @@ function Slider() {
             alt="button"
           />
         ) : (
-          <input
+          <input // circle buttons for < 992px 
           style={(imageIndex === index) ? {backgroundColor: 'black'} : {backgroundColor: 'lightgrey'}}
           key={item}
           type="button"
