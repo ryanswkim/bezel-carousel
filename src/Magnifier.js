@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-/* eslint-disable react/prop-types */
+/* eslint-disable */
 
 const GLASS_HEIGHT = 200;
 const GLASS_WIDTH = 200;
 const ZOOM = 1.5;
 
 function Magnifier({
-  src,
+  src, visible,
 }) {
   const [[x, y], setXY] = useState([0, 0]);
   const [[imgWidth, imgHeight], setSize] = useState([0, 0]);
@@ -23,7 +23,7 @@ function Magnifier({
         src={src}
         draggable={false}
         style={{
-          width: '100%', height: '100%', userSelect: 'none', borderRadius: '5%', border: '1px solid black', opacity: 0,
+          width: '100%', height: '100%', userSelect: 'none', borderRadius: '5%', border: '1px solid black',
         }}
         onMouseEnter={(e) => {
           const target = e.currentTarget;
@@ -43,6 +43,7 @@ function Magnifier({
         alt="Watch display"
       />
 
+      {(visible) ? (
       <div
         style={{
           display: showMagnifier ? '' : 'none',
@@ -66,6 +67,7 @@ function Magnifier({
           pointerEvents: 'none',
         }}
       />
+      ) : ''}
     </div>
   );
 }

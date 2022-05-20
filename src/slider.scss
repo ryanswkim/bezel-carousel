@@ -19,7 +19,7 @@ html, body {
 
 .filler {
     width: 27.5%;
-    height: 200%;
+    height: 100%;
     position: absolute;
 
     background-color: black;
@@ -36,13 +36,6 @@ html, body {
     justify-content: center;
 }
 
-.carousel-img{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 5%;
-}
-
 .image-container {
     position: relative;
     width: 88%;
@@ -54,12 +47,11 @@ html, body {
     align-items: center;
 }
 
-.buttons{
+#buttons{
     width: 55%;
     height: 7.5%;
     position: absolute;
 
-    bottom: 3%;
     left: 22.5%;
 
     display: flex;
@@ -67,11 +59,20 @@ html, body {
     align-items: center;
 }
 
-.buttons > input {
+.buttons-lg > input {
     width: 5%;
     margin: 0 0.5%;
+    border-radius: 25%;
+}
 
-    border-radius: 30%;
+.buttons-small > input {
+    height: 12px;
+    width: 12px;
+    
+    margin: 0 0.5%;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
 }
 
 .shift-btn {
@@ -79,22 +80,6 @@ html, body {
     font-size: large;
     font-weight: bold;
     border: none;
+    background-color: transparent;
     cursor: pointer;
-}
-
-.selected-btn{
-    border: 2px solid black;
-}
-
-.unselected-btn{
-    border: 2px solid #EEE;
-}
-
-.btn-image{
-    width: 100%;
-    height: 100%;
-}
-
-.fluff {
-    width: 25%;
 }
