@@ -59,31 +59,32 @@ function Slider() {
         }
       }}
     >
-      {Object.values(images).map((item) => ( // create each slide
-        <div
-          key={item}
-          className="slide"
-          style={dragging ? { transition: 'none', transform: `translateX(${x * 2}%)` }
-            : { transition: '0.15s', transform: `translateX(${x * 2}%)` }}
-        >
+      <div className="carousel-container">
+        {Object.values(images).map((item) => ( // create each slide
           <div
-            role="none"
-            className="image-container"
-            onMouseDown={(e) => { // initialize dragging sequence if clicking on image
-              setDragging(true);
-              setMouse(e.clientX);
-              setAnchor(x);
-            }}
+            key={item}
+            className="slide"
+            style={dragging ? { transition: 'none', transform: `translateX(${x * 2}%)` }
+              : { transition: '0.15s', transform: `translateX(${x * 2}%)` }}
           >
-            <Magnifier src={item} visible={lg} />
+            <div
+              role="none"
+              className="image-container"
+              onMouseDown={(e) => { // initialize dragging sequence if clicking on image
+                setDragging(true);
+                setMouse(e.clientX);
+                setAnchor(x);
+              }}
+            >
+              <Magnifier src={item} visible={lg} />
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
 
       <div
         className={lg ? 'buttons-lg' : 'buttons-small'}
         id="buttons"
-        style={{ bottom: '3%' }}
       >
         <input
           className="shift-btn"
@@ -125,9 +126,6 @@ function Slider() {
           }}
         />
       </div>
-
-      <div className="filler" style={{ left: 0 }} />
-      <div className="filler" style={{ right: 0 }} />
     </div>
   );
 }
